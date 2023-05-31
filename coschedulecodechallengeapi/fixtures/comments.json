@@ -1,0 +1,11 @@
+[
+    {
+        "model": "coschedulecodechallengeapi.comment",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "story": 1,
+            "content": "Awesome story!!"
+        }
+    }
+]

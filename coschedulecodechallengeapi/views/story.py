@@ -21,11 +21,13 @@ class ExternalStories(ViewSet):
 
         top_stories_url = "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
 
+
         top_stories_response = requests.get(top_stories_url)
 
         if top_stories_response.status_code == 200:  
             data = top_stories_response.json()
-            story_id_array = [data]
+            limit = 10  # Specify the desired limit here
+            story_id_array = data[:limit]
 
         else:
             print("Error: Request failed with status code", top_stories_response.status_code)
@@ -40,7 +42,7 @@ class ExternalStories(ViewSet):
         full_story_objects = []
 
         for id in story_id_array:
-            full_object_url = f"https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty"  
+            full_object_url = f'https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty' 
             response = requests.get(full_object_url)
 
             if response.status_code == 200:  # Successful request
@@ -51,15 +53,15 @@ class ExternalStories(ViewSet):
 
         for story_object in full_story_objects:
             array_of_story_objects = []
+            new_story = Story()
 
-            new_object = {
-                Story.by: story_object.by,
-                Story.title: story_object.title,
-                Story.url: story_object.url
-            }
-            array_of_story_objects.append(new_object)
-            # response = Response(array_of_story_objects, status=status.HTTP_200_OK)
-            # return response
-            response = HttpResponse("Hello, World!")
-            return response
+            new_story.by=story_object.by
+            new_story.title=story_object.title
+            new_story.url=story_object.url
+
+            array_of_story_objects.append(new_story)
+        response = Response(full_story_objects)
+        return response
+        # response = HttpResponse("Hello, World!")
+        # return response
 #    print(new_object)

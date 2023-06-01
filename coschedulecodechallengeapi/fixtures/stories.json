@@ -1,0 +1,11 @@
+[
+    {
+        "model": "coschedulecodechallengeapi.story",
+        "pk": 1,
+        "fields": {
+            "by": "Samuel Jones",
+            "title": "Cat stories",
+            "url": "https://pethelpful.com/cats/Amazing-Cats-and-True-Cat-Stories"
+        }
+    }
+]

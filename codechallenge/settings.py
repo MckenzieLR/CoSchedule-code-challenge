@@ -1,10 +1,14 @@
 import os
 from pathlib import Path
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('MY_SECRET_KEY')
+
+
+SECRET_KEY = 'django-insecure-f6uv@*c9%ary8a5ok(c+6r676=200*6ql877rf87sjrpyxtdvv'
+#SECRET_KEY = os.environ.get('MY_SECRET_KEY')
+#SECRET_KEY = os.environ.get('382676acef1f23f321d4821c91cc4e66')
+#AUTHENTICATION_BACKENDS = []  # Empty list to disable authorization
 
 
 DEBUG = True
@@ -59,7 +63,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

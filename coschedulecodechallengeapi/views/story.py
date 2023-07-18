@@ -11,8 +11,9 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from django.http import HttpResponse
-from rest_framework import status
+from rest_framework import status, serializers
 from coschedulecodechallengeapi.models import Story
+import json
 
 
 class ExternalStories(ViewSet):
@@ -41,6 +42,7 @@ class ExternalStories(ViewSet):
 
         full_story_objects = []
 
+    # looping through story_id_array to get each story id and pass as parameter to get the full story object 
         for id in story_id_array:
             full_object_url = f'https://hacker-news.firebaseio.com/v0/item/{id}.json?print=pretty' 
             response = requests.get(full_object_url)
@@ -51,17 +53,26 @@ class ExternalStories(ViewSet):
             else:
                 print(f"Error: Request failed for object ID {id} with status code", response.status_code)
 
+        stories = []
         for story_object in full_story_objects:
-            array_of_story_objects = []
             new_story = Story()
+            # new_story.by = ("hello", "hi", "hey")
+            print( 'new_story', new_story)
+            print('story_object', story_object)
+            new_story.id=story_object['id']
+            new_story.by=story_object['by']
+            new_story.title=story_object['title']
+            new_story.url=story_object['url']
 
-            new_story.by=story_object.by
-            new_story.title=story_object.title
-            new_story.url=story_object.url
-
-            array_of_story_objects.append(new_story)
-        response = Response(full_story_objects)
-        return response
+            stories.append(new_story)
+        serializer = StorySerializer(stories, many=True)
+        return Response(serializer.data)
+        
+class StorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Story
+        fields = ('id', 'by', 'title', 'url')
         # response = HttpResponse("Hello, World!")
         # return response
 #    print(new_object)
+

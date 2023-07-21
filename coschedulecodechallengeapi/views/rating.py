@@ -6,6 +6,7 @@ from coschedulecodechallengeapi.models import Rating, Story
 from django.contrib.auth.models import User
 
 class RatingView(ViewSet):
+
     def list(self, request):
         ratings = Rating.objects.all()
         serializer = RatingSerializer(ratings, many=True)
@@ -17,10 +18,6 @@ class RatingView(ViewSet):
         return Response(serializer.data)
     
     def create(self, request):
-        """Handle POST operations
-
-        Returns:
-        Response -- JSON serialized comment instance"""
         user = User.objects.get(id=request.auth.user.id)
         story = Story.objects.get(pk=request.data["story"])
         rating = Rating.objects.create(

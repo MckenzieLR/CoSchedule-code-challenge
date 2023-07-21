@@ -4,16 +4,14 @@ from django.conf.urls import include
 from coschedulecodechallengeapi.views.comment import CommentView
 from coschedulecodechallengeapi.views.rating import RatingView
 from coschedulecodechallengeapi.views.story import ExternalStories
-from coschedulecodechallengeapi.views.client_story import ClientStoryView
 from coschedulecodechallengeapi.views.auth import login_user, register_user
 from rest_framework import routers
 
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'comments', CommentView, 'comment')
-router.register(r'stories', ClientStoryView, 'story')
 router.register(r'ratings', RatingView, 'rating')
-router.register(r'externaldatasource', ExternalStories, 'externalstory')
+router.register(r'stories', ExternalStories, 'story')
 
 urlpatterns = [
     path('register', register_user),

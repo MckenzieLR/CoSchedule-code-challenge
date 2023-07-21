@@ -14,7 +14,7 @@ def login_user(request):
     Method arguments:
       request -- The full HTTP request object
     '''
-    username = request.data['username']
+    username = request.data['email']
     password = request.data['password']
 
     # Use the built-in authenticate method to verify
@@ -46,7 +46,7 @@ def register_user(request):
     # Create a new user by invoking the `create_user` helper method
     # on Django's built-in User model
     new_user = User.objects.create_user(
-        username=request.data['username'],
+        username=request.data['email'],
         password=request.data['password'],
         first_name=request.data['first_name'],
         last_name=request.data['last_name'],

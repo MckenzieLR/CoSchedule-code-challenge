@@ -54,9 +54,6 @@ class ExternalStories(ViewSet):
         stories = []
         for story_object in full_story_objects:
             new_story = Story()
-            # new_story.by = ("hello", "hi", "hey")
-            print( 'new_story', new_story)
-            print('story_object', story_object)
             new_story.id=story_object['id']
             new_story.by=story_object['by']
             new_story.title=story_object['title']
